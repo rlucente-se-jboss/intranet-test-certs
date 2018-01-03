@@ -30,6 +30,5 @@ The server truststore, `truststore.bcfks`, contains
 The client browser should have
 
 * ca.cert.pem (root CA) as authority
-* client.cert.pem
-* client.key.pem
+* client.p12
 
