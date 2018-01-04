@@ -19,16 +19,15 @@ for the server.  Finally, run the following commands as root:
 
 The server keystore, `keystore.bcfks`, contains
  
-* intermediate.cert.pem (intermediate CA)
-* appserver.$IP_ADDR.nip.io.cert.pem
-* appserver.$IP_ADDR.nip.io.key.pem
+* the intermediate CA certificate with alias `intermediate_ca`
+* the application server cert and private key with alias `appserver`
     
 The server truststore, `truststore.bcfks`, contains
 
-* ca.cert.pem (root CA)
+* the root CA with alias `root_ca`
 
-The client browser should have
+The client browser should import
 
-* ca.cert.pem (root CA) as authority
-* client.p12
+* The root CA available at /root/ca/certs/ca.cert.pem as an authority
+* The client's certificate and private key available at /root/client.p12
 

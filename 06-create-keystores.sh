@@ -68,10 +68,13 @@ keytool -importkeystore \
 echo
 echo "The following files are needed by JBoss EAP 7.1:"
 echo
-echo "    keystore.bcfks"
-echo "    truststore.bcfks"
+echo "    /root/keystore.bcfks"
+echo "    /root/truststore.bcfks"
 echo
 echo "The client cert and key are available in pkcs12 format here:"
 echo
-echo "    client.p12"
+echo "    /root/client.p12"
+echo
+echo "The root CA certificate is available in pem format here:"
+echo "    /root/ca/certs/ca.cert.pem"
 echo
