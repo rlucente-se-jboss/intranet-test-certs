@@ -6,30 +6,10 @@
 
 USERNAME="PUT YOUR RHSM USER NAME HERE"
 PASSWD='PUT YOUR RHSM PASSWORD HERE'
-
-# Insert your subscription manager pool id here, if known.  Otherwise,
-# this script will try to dynamically determine the pool id.
 SM_POOL_ID='PUT YOUR RHSM POOL ID HERE'
 
-subscription-manager register --username $USERNAME --password $PASSWD
-
-if [ "x${SM_POOL_ID}" = "x" ]
-then
-  SM_POOL_ID=`subscription-manager list --available | \
-      grep 'Subscription Name:\|Pool ID:\|System Type' | \
-      grep -B2 'Physical' | \
-      grep -A1 'Red Hat Satellite Employee Subscription' | \
-      grep 'Pool ID:' | awk '{print $3}'`
-
-  # exit if none found
-  if [ "x${SM_POOL_ID}" = "x" ]
-  then
-    echo "No subcription manager pool id found.  Exiting"
-    exit 1
-  fi
-fi
-
 # configure RHSM
+subscription-manager register --username $USERNAME --password $PASSWD
 subscription-manager attach --pool=$SM_POOL_ID
 subscription-manager repos --disable='*'
 subscription-manager repos --enable=rhel-7-server-rpms

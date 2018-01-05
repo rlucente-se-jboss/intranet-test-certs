@@ -23,8 +23,8 @@ keytool -importcert \
 # export server cert
 
 openssl pkcs12 -export \
-    -passin pass:secretpassword \
-    -passout pass:secretpassword \
+    -passin 'pass:admin1jboss!' \
+    -passout 'pass:admin1jboss!' \
     -in ca/intermediate/certs/appserver.$IP_ADDR.nip.io.cert.pem \
     -inkey ca/intermediate/private/appserver.$IP_ADDR.nip.io.key.pem \
     -CAfile ca/intermediate/certs/ca-chain.cert.pem \
@@ -34,8 +34,8 @@ openssl pkcs12 -export \
 # export client cert
 
 openssl pkcs12 -export \
-    -passin pass:secretpassword \
-    -passout pass:secretpassword \
+    -passin 'pass:admin1jboss!' \
+    -passout 'pass:admin1jboss!' \
     -in ca/intermediate/certs/client.cert.pem \
     -inkey ca/intermediate/private/client.key.pem \
     -CAfile ca/intermediate/certs/ca-chain.cert.pem \
@@ -60,11 +60,11 @@ keytool -importkeystore \
     -destkeystore NONE \
     -srcstoretype PKCS12 \
     -deststoretype PKCS11 \
-    -srcstorepass secretpassword \
+    -srcstorepass 'admin1jboss!' \
     -deststorepass 'admin1jboss!' \
     -srcalias appserver \
     -destalias appserver \
-    -srckeypass secretpassword \
+    -srckeypass 'admin1jboss!' \
     -destkeypass 'admin1jboss!' \
 
 echo

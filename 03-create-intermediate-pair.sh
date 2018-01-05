@@ -19,20 +19,20 @@ cp /root/intermediate-ca-openssl.conf /root/ca/intermediate/openssl.conf
 # create the intermediate key
 cd /root/ca
 openssl genrsa -aes256 \
-   -passout pass:secretpassword \
+   -passout 'pass:admin1jboss!' \
    -out intermediate/private/intermediate.key.pem 4096
 chmod 400 intermediate/private/intermediate.key.pem
 
 # create the intermediate certificate
 openssl req -config intermediate/openssl.conf -new -sha256 \
-    -passin pass:secretpassword \
+    -passin 'pass:admin1jboss!' \
     -key intermediate/private/intermediate.key.pem \
     -out intermediate/csr/intermediate.csr.pem \
     -subj "/C=US/ST=NC/L=Raleigh/O=Red Hat/OU=Public Sector/CN=Red Hat Intermediate CA Test"
 
 echo 'Enter passphrase for intermediate.key.pem (e.g. secretpassword)'
 openssl ca -config openssl.conf -extensions v3_intermediate_ca \
-    -batch -passin pass:secretpassword \
+    -batch -passin 'pass:admin1jboss!' \
     -days 3650 -notext -md sha256 \
     -in intermediate/csr/intermediate.csr.pem \
     -out intermediate/certs/intermediate.cert.pem

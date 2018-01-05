@@ -16,13 +16,13 @@ cp /root/root-ca-openssl.conf /root/ca/openssl.conf
 
 # create root key
 openssl genrsa -aes256 \
-    -passout pass:secretpassword \
+    -passout 'pass:admin1jboss!' \
     -out private/ca.key.pem 4096
 chmod 400 private/ca.key.pem
 
 # create root certificate
 openssl req -config openssl.conf \
-    -passin pass:secretpassword \
+    -passin 'pass:admin1jboss!' \
     -key private/ca.key.pem \
     -new -x509 -days 7300 -sha256 -extensions v3_ca \
     -out certs/ca.cert.pem \
