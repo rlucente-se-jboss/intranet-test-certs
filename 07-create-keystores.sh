@@ -2,18 +2,23 @@
 
 IP_ADDR='PUT SERVER IP ADDRESS HERE'
 
-# import root ca to truststore
+# initialize NSS database
+mkdir -p $HOME/fipsdb
+modutil -force -dbdir $HOME/fipsdb -create
+modutil -force -dbdir $HOME/fipsdb -fips true
+
+echo "Scripts assume NSS keystore password is admin1jboss!"
+modutil -force -dbdir $HOME/fipsdb -changepw "NSS FIPS 140-2 Certificate DB"
+
+# import root ca to keystore
 
 keytool -importcert \
-    -trustcacerts \
-    -noprompt \
+    -J-Djava.security.properties="$HOME"/java.security.properties \
+    -keystore NONE \
     -alias root_ca \
     -file ca/certs/ca.cert.pem \
-    -destkeystore truststore.bcfks \
-    -deststorepass secretpassword \
-    -storetype BCFKS \
-    -providername BCFIPS \
-    -providerclass org.bouncycastle.jcajce.provider.BouncyCastleFipsProvider
+    -deststorepass 'admin1jboss!' \
+    -storetype pkcs11
 
 # export server cert
 
@@ -40,41 +45,39 @@ openssl pkcs12 -export \
 # import intermediate ca
 
 keytool -importcert \
-    -noprompt \
+    -J-Djava.security.properties="$HOME"/java.security.properties \
+    -keystore NONE \
     -alias intermediate_ca \
     -file ca/intermediate/certs/deploy-ca-chain.cert.pem \
-    -destkeystore keystore.bcfks \
-    -deststorepass secretpassword \
-    -storetype BCFKS \
-    -providername BCFIPS \
-    -providerclass org.bouncycastle.jcajce.provider.BouncyCastleFipsProvider
+    -deststorepass 'admin1jboss!' \
+    -storetype PKCS11
 
 # import server cert and key
 
 keytool -importkeystore \
+    -J-Djava.security.properties="$HOME"/java.security.properties \
     -srckeystore server.p12 \
-    -destkeystore keystore.bcfks \
+    -destkeystore NONE \
     -srcstoretype PKCS12 \
-    -deststoretype BCFKS \
+    -deststoretype PKCS11 \
     -srcstorepass secretpassword \
-    -deststorepass secretpassword \
+    -deststorepass 'admin1jboss!' \
     -srcalias appserver \
     -destalias appserver \
     -srckeypass secretpassword \
-    -destkeypass secretpassword \
-    -providername BCFIPS \
-    -providerclass org.bouncycastle.jcajce.provider.BouncyCastleFipsProvider
+    -destkeypass 'admin1jboss!' \
 
 echo
 echo "The following files are needed by JBoss EAP 7.1:"
 echo
-echo "    /root/keystore.bcfks"
-echo "    /root/truststore.bcfks"
+echo "    $HOME/fipsdb"
+echo "    $HOME/java.security.properties"
+echo "    $HOME/nss-pkcs11-fips.cfg"
 echo
 echo "The client cert and key are available in pkcs12 format here:"
 echo
-echo "    /root/client.p12"
+echo "    $HOME/client.p12"
 echo
 echo "The root CA certificate is available in pem format here:"
-echo "    /root/ca/certs/ca.cert.pem"
+echo "    $HOME/ca/certs/ca.cert.pem"
 echo

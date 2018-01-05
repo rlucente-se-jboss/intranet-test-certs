@@ -39,13 +39,6 @@ yum -y update
 yum -y install java-1.8.0-openjdk-devel java-1.8.0-openjdk
 yum -y clean all
 
-# add bcfips provider
-cp bc-fips-1.0.1.jar /usr/lib/jvm/jre-1.8.0-openjdk/lib/ext/
-
-# set securerandom.source to non-blocking
-sed -i 's/^\(securerandom.source=file:\/dev\/\)..*/\1urandom/g' \
-    /usr/lib/jvm/jre-1.8.0-openjdk/lib/security/java.security
-
 # reboot
 systemctl reboot
 
