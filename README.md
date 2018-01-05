@@ -31,3 +31,4 @@ The client browser should import
 * The root CA available at /root/ca/certs/ca.cert.pem as an authority
 * The client's certificate and private key available at /root/client.p12
 
+The keystore and truststore password is `secretpassword`.
