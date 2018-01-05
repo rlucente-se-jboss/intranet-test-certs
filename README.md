@@ -1,7 +1,16 @@
-Make sure that the bc-fips-1.0.1.jar from [Legion of the Bouncy Castle](https://bouncycastle.org/fips-java)
-is in this directory.  The scripts follow these
+# Generate Test Certificates
+The scripts follow these
 [instructions](https://jamielinux.com/docs/openssl-certificate-authority/index.html).
 
+## Install RHEL 7.4 in FIPS mode
+First, install RHEL 7.4. When selecting the option "Install Red Hat
+Enterprise Linux 7.4" from the main menu, press TAB and then add
+`fips=1` to the vmlinuz line shown.  Make sure that there is
+sufficient entropy during installation by typing on the keyboard
+and moving the mouse around.  That one change will configure the
+operating system to be in FIPS enforcing mode.
+
+## Generate the certificates
 After installing RHEL 7.4, copy the contents of this directory to
 /root.  Edit the `01-subscribe.sh` script to use correct values for
 the RHSM `USERNAME` and `PASSWD`.  You can also set the RHSM pool
