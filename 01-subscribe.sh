@@ -16,7 +16,7 @@ subscription-manager repos --enable=rhel-7-server-rpms
 
 # apply all updates
 yum -y update
-yum -y install java-1.8.0-openjdk-devel java-1.8.0-openjdk
+yum -y install java-1.8.0-openjdk-devel java-1.8.0-openjdk unzip
 yum -y clean all
 
 # reboot
