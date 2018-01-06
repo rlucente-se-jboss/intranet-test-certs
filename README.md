@@ -34,7 +34,7 @@ At the server, you'll need to import the following files into the
 appropriate keystore:
 
 * /root/ca.cert.pem - the root CA certificate with alias `root_ca`
-* /root/ca-chain.cert.pem - the intermediate CA certificate with alias `intermediate_ca`
+* /root/deploy-ca-chain.cert.pem - the intermediate CA certificate with alias `intermediate_ca`
 * /root/server.p12 - the application server certificate and private key with alias `appserver`
     
 The client browser should import the following files:
