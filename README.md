@@ -3,20 +3,21 @@ The scripts follow these
 [instructions](https://jamielinux.com/docs/openssl-certificate-authority/index.html).
 
 ## Install RHEL 7.4 in FIPS mode
-First, install RHEL 7.4. When selecting the option "Install Red Hat
-Enterprise Linux 7.4" from the main menu, press TAB and then add
-`fips=1` to the vmlinuz line shown.  Make sure that there is
-sufficient entropy during installation by typing on the keyboard
-and moving the mouse around.  That one change will configure the
-operating system to be in FIPS enforcing mode.
+When RHEL 7.4 first offers the installation menu, select the option
+"Install Red Hat Enterprise Linux 7.4" from the main menu, press
+TAB and then add `fips=1` to the vmlinuz line shown.  Make sure
+that there is sufficient entropy during installation by typing on
+the keyboard and moving the mouse around.  That single change to
+the vmlinuz line will configure the operating system to be in FIPS
+enforcing mode.
 
 ## Generate the certificates
 After installing RHEL 7.4, copy the contents of this directory to
 /root.  Edit the `01-subscribe.sh` script to use correct values for
 the RHSM `USERNAME`, RHSM `PASSWD`, and RHSM pool id as `SM_POOL_ID`.
-Edit the `04-create-server-pair.sh` script to use the matching
-`IP_ADDR` for the server.  Finally, run the following commands as
-root:
+Edit the `04-create-server-pair.sh` and `06-export-certs.sh` scripts
+to use the matching `IP_ADDR` for the server.  Finally, run the
+following commands as root:
 
     cd /root
     ./01-subscribe.sh
