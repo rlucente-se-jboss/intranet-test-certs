@@ -31,17 +31,14 @@ After the system reboots, run the remaining commands:
     ./05-create-client-pair.sh
     ./06-export-certs.sh
 
-At the server, you'll need to import the following files into the
+At the server, you'll need to import the following file into the
 appropriate keystore:
 
-* /root/ca.cert.pem - the root CA certificate with alias `root_ca`
-* /root/deploy-ca-chain.cert.pem - the intermediate CA certificate with alias `intermediate_ca`
-* /root/server.p12 - the application server certificate and private key with alias `appserver`
+* /root/server.p12 - the appserver certificate, private key, and trust chain
     
-The client browser should import the following files:
+The client browser should import the following file:
 
-* /root/ca.cert.pem - the root CA certificate with alias `root_ca`
-* /root/client.p12 - the client certificate and private key
+* /root/client.p12 - the client certificate, private key, and trust chain
 
 The default password used throughout is `admin1jboss!`
 

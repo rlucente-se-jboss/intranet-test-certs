@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # create directory structure
-rm -fr /root/ca
+rm -fr /root/ca /root/*.p12 /root/.pki
 mkdir -p /root/ca
 cd /root/ca
 mkdir certs crl newcerts private
