@@ -31,14 +31,14 @@ After the system reboots, run the remaining commands:
     ./05-create-client-pair.sh
     ./06-export-certs.sh
 
-At the server, you'll need to import the following file into the
+At the server, you'll need to import the following files into the
 appropriate keystore:
 
 * /root/server.p12 - the appserver certificate and private key
-* /root/intermdiate.cert.pem - the intermediate CA that signed the client and server certs
+* /root/intermediate.cert.pem - the intermediate CA that signed the client and server certs
 * /root/ca.cert.pem - the trusted root CA
     
-The client browser should import the following file:
+The client browser should import the following files:
 
 * /root/client.p12 - the client certificate and private key
 * /root/ca.cert.pem - the trusted root CA
