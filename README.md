@@ -34,11 +34,14 @@ After the system reboots, run the remaining commands:
 At the server, you'll need to import the following file into the
 appropriate keystore:
 
-* /root/server.p12 - the appserver certificate, private key, and trust chain
+* /root/server.p12 - the appserver certificate and private key
+* /root/intermdiate.cert.pem - the intermediate CA that signed the client and server certs
+* /root/ca.cert.pem - the trusted root CA
     
 The client browser should import the following file:
 
-* /root/client.p12 - the client certificate, private key, and trust chain
+* /root/client.p12 - the client certificate and private key
+* /root/ca.cert.pem - the trusted root CA
 
 The default password used throughout is `admin1jboss!`
 
