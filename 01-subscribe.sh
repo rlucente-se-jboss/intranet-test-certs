@@ -7,6 +7,10 @@
 USERNAME="PUT YOUR RHSM USER NAME HERE"
 PASSWD='PUT YOUR RHSM PASSWORD HERE'
 SM_POOL_ID='PUT YOUR RHSM POOL ID HERE'
+IP_ADDR="PUT SERVER IP ADDRESS HERE"
+
+# set hostname
+hostnamectl set-hostname appserver.$IP_ADDR.nip.io.
 
 # configure RHSM
 subscription-manager register --username $USERNAME --password $PASSWD
