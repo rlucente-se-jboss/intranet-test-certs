@@ -4,10 +4,7 @@
 # subscribe and update system
 #
 
-USERNAME="PUT YOUR RHSM USER NAME HERE"
-PASSWD='PUT YOUR RHSM PASSWORD HERE'
-SM_POOL_ID='PUT YOUR RHSM POOL ID HERE'
-IP_ADDR="PUT SERVER IP ADDRESS HERE"
+. $(dirname $0)/demo.conf
 
 # set hostname
 hostnamectl set-hostname appserver.$IP_ADDR.nip.io.

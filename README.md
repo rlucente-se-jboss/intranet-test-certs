@@ -13,10 +13,8 @@ enforcing mode.
 
 ## Generate the certificates
 After installing RHEL 7.4, copy the contents of this directory to
-/root.  Edit the `01-subscribe.sh` script to use correct values for
-the RHSM `USERNAME`, RHSM `PASSWD`, and RHSM pool id as `SM_POOL_ID`.
-Edit the `04-create-server-pair.sh` and `06-export-certs.sh` scripts
-to use the matching `IP_ADDR` for the server.  Finally, run the
+/root.  Edit the `demo.conf` script to use correct values for your
+IP address and RHSM credentials and pool id.  Finally, run the
 following commands as root:
 
     cd /root

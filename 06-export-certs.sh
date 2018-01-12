@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IP_ADDR='PUT SERVER IP ADDRESS HERE'
+. $(dirname $0)/demo.conf
 
 # export server cert
 openssl pkcs12 -export \
