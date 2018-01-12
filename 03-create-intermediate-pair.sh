@@ -19,8 +19,8 @@ echo 1000 > /root/ca/intermediate/crlnumber
 cp /root/intermediate-ca-openssl.conf /root/ca/intermediate/openssl.conf
 cat >> /root/ca/intermediate/openssl.conf <<END1
 [alt_names]
-DNS.1 = *.$IP_ADDR.nip.io
-DNS.2 = $IP_ADDR.nip.io
+DNS.1 = *.$SERVER_DOMAIN
+DNS.2 = $SERVER_DOMAIN
 IP.1 = 127.0.0.1
 
 END1
@@ -28,20 +28,19 @@ END1
 # create the intermediate key
 cd /root/ca
 openssl genrsa -aes256 \
-   -passout 'pass:admin1jboss!' \
+   -passout "$OPENSSL_DEFAULT_PASSWORD" \
    -out intermediate/private/intermediate.key.pem 4096
 chmod 400 intermediate/private/intermediate.key.pem
 
 # create the intermediate certificate
 openssl req -config intermediate/openssl.conf -new -sha256 \
-    -passin 'pass:admin1jboss!' \
+    -passin "$OPENSSL_DEFAULT_PASSWORD" \
     -key intermediate/private/intermediate.key.pem \
     -out intermediate/csr/intermediate.csr.pem \
     -subj "/C=US/ST=NC/L=Raleigh/O=Red Hat/OU=Public Sector/CN=Red Hat Intermediate CA Test"
 
-echo 'Enter passphrase for intermediate.key.pem (e.g. secretpassword)'
 openssl ca -config openssl.conf -extensions v3_intermediate_ca \
-    -batch -passin 'pass:admin1jboss!' \
+    -batch -passin "$OPENSSL_DEFAULT_PASSWORD" \
     -days 3650 -notext -md sha256 \
     -in intermediate/csr/intermediate.csr.pem \
     -out intermediate/certs/intermediate.cert.pem

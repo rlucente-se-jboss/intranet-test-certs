@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. $(dirname $0)/demo.conf
+
 # create directory structure
 rm -fr /root/ca /root/*.p12 /root/*.pem /root/.pki
 mkdir -p /root/ca
@@ -16,13 +18,13 @@ cp /root/root-ca-openssl.conf /root/ca/openssl.conf
 
 # create root key
 openssl genrsa -aes256 \
-    -passout 'pass:admin1jboss!' \
+    -passout "$OPENSSL_DEFAULT_PASSWORD" \
     -out private/ca.key.pem 4096
 chmod 400 private/ca.key.pem
 
 # create root certificate
 openssl req -config openssl.conf \
-    -passin 'pass:admin1jboss!' \
+    -passin "$OPENSSL_DEFAULT_PASSWORD" \
     -key private/ca.key.pem \
     -new -x509 -days 7300 -sha256 -extensions v3_ca \
     -out certs/ca.cert.pem \

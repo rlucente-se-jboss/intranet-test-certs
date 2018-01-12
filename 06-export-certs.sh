@@ -4,18 +4,18 @@
 
 # export server cert
 openssl pkcs12 -export \
-    -passin 'pass:admin1jboss!' \
-    -passout 'pass:admin1jboss!' \
-    -in ca/intermediate/certs/appserver.$IP_ADDR.nip.io.cert.pem \
-    -inkey ca/intermediate/private/appserver.$IP_ADDR.nip.io.key.pem \
+    -passin "$OPENSSL_DEFAULT_PASSWORD" \
+    -passout "$OPENSSL_DEFAULT_PASSWORD" \
+    -in ca/intermediate/certs/$SERVER_FQDN.cert.pem \
+    -inkey ca/intermediate/private/$SERVER_FQDN.key.pem \
     -CAfile ca/intermediate/certs/ca-chain.cert.pem \
-    -name appserver \
+    -name $SERVER_NAME \
     -out server.p12
 
 # export client cert
 openssl pkcs12 -export \
-    -passin 'pass:admin1jboss!' \
-    -passout 'pass:admin1jboss!' \
+    -passin "$OPENSSL_DEFAULT_PASSWORD" \
+    -passout "$OPENSSL_DEFAULT_PASSWORD" \
     -in ca/intermediate/certs/client.cert.pem \
     -inkey ca/intermediate/private/client.key.pem \
     -CAfile ca/intermediate/certs/ca-chain.cert.pem \

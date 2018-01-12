@@ -7,11 +7,11 @@
 . $(dirname $0)/demo.conf
 
 # set hostname
-hostnamectl set-hostname appserver.$IP_ADDR.nip.io.
+hostnamectl set-hostname $SERVER_FQDN.
 
 # configure RHSM
-subscription-manager register --username $USERNAME --password $PASSWD
-subscription-manager attach --pool=$SM_POOL_ID
+subscription-manager register --username $RHSM_USERNAME --password $RHSM_PASSWD
+subscription-manager attach --pool=$RHSM_POOL_ID
 subscription-manager repos --disable='*'
 subscription-manager repos --enable=rhel-7-server-rpms
 
