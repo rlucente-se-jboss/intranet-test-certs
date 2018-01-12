@@ -16,7 +16,7 @@ openssl req -config intermediate/openssl.conf -new -sha256 \
     -passin 'pass:admin1jboss!' \
     -key intermediate/private/appserver.$IP_ADDR.nip.io.key.pem \
     -out intermediate/csr/appserver.$IP_ADDR.nip.io.csr.pem \
-    -subj "/C=US/ST=NC/L=Raleigh/O=Red Hat/OU=Public Sector/CN=appserver.$IP_ADDR.nip.io"
+    -subj "/C=US/ST=NC/L=Raleigh/O=Red Hat/OU=Public Sector/CN=*.$IP_ADDR.nip.io"
 
 # sign the cert with the intermediate ca
 

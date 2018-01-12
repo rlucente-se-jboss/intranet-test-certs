@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. $(dirname $0)/demo.conf
+
 # create the intermediate pair
 
 # prepare the directory
@@ -15,6 +17,13 @@ echo 1000 > /root/ca/intermediate/crlnumber
 
 # create intermediate CA configuration file
 cp /root/intermediate-ca-openssl.conf /root/ca/intermediate/openssl.conf
+cat >> /root/ca/intermediate/openssl.conf <<END1
+[alt_names]
+DNS.1 = *.$IP_ADDR.nip.io
+DNS.2 = $IP_ADDR.nip.io
+IP.1 = 127.0.0.1
+
+END1
 
 # create the intermediate key
 cd /root/ca
