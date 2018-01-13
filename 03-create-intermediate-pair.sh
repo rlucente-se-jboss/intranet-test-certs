@@ -18,7 +18,7 @@ echo 1000 > /root/ca/intermediate/crlnumber
 # create intermediate CA configuration file
 cp /root/intermediate-ca-openssl.conf /root/ca/intermediate/openssl.conf
 cat >> /root/ca/intermediate/openssl.conf <<END1
-[alt_names]
+[server_alt_names]
 DNS.1 = *.$SERVER_DOMAIN
 DNS.2 = $SERVER_DOMAIN
 IP.1 = 127.0.0.1
