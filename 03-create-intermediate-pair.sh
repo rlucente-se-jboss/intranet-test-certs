@@ -25,6 +25,9 @@ IP.1 = 127.0.0.1
 
 END1
 
+sed -i "s/CLIENT_SAN_HERE/otherName:1.3.6.1.4.1.311.20.2.3;UTF8:$CLIENT_UPN/g" \
+    /root/ca/intermediate/openssl.conf
+
 # create the intermediate key
 cd /root/ca
 openssl genrsa -aes256 \
