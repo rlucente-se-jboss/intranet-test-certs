@@ -4,7 +4,7 @@
 
 # create the private key
 
-cd /root/ca
+cd $WORKDIR/ca
 openssl genrsa -aes256 \
     -passout "$OPENSSL_DEFAULT_PASSWORD" \
     -out intermediate/private/client.key.pem 2048

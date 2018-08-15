@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 . $(dirname $0)/demo.conf
 
 # create the private key
 
-cd /root/ca
+cd $WORKDIR/ca
 openssl genrsa -aes256 \
     -passout "$OPENSSL_DEFAULT_PASSWORD" \
     -out intermediate/private/$SERVER_FQDN.key.pem 2048

@@ -1,23 +1,23 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 . $(dirname $0)/demo.conf
 
 # create the intermediate pair
 
 # prepare the directory
-mkdir /root/ca/intermediate
-cd /root/ca/intermediate
+mkdir $WORKDIR/ca/intermediate
+cd $WORKDIR/ca/intermediate
 mkdir certs crl csr newcerts private
 chmod 700 private
 
 # create flat file database to track signed certs and crls
 touch index.txt
 echo 1000 > serial
-echo 1000 > /root/ca/intermediate/crlnumber
+echo 1000 > $WORKDIR/ca/intermediate/crlnumber
 
 # create intermediate CA configuration file
-cp /root/intermediate-ca-openssl.conf /root/ca/intermediate/openssl.conf
-cat >> /root/ca/intermediate/openssl.conf <<END1
+envsubst '$WORKDIR' < $WORKDIR/intermediate-ca-openssl.conf > $WORKDIR/ca/intermediate/openssl.conf
+cat >> $WORKDIR/ca/intermediate/openssl.conf <<END1
 [server_alt_names]
 DNS.1 = *.$SERVER_DOMAIN
 DNS.2 = $SERVER_DOMAIN
@@ -29,11 +29,11 @@ END1
 # set user principal name within subject alternative name
 # msUPN = 1.3.6.1.4.1.311.20.2.3
 #
-sed -i "s/CLIENT_SAN_HERE/otherName:msUPN;UTF8:$CLIENT_UPN/g" \
-    /root/ca/intermediate/openssl.conf
+sed -i.bak "s/CLIENT_SAN_HERE/otherName:msUPN;UTF8:$CLIENT_UPN/g" \
+    $WORKDIR/ca/intermediate/openssl.conf
 
 # create the intermediate key
-cd /root/ca
+cd $WORKDIR/ca
 openssl genrsa -aes256 \
    -passout "$OPENSSL_DEFAULT_PASSWORD" \
    -out intermediate/private/intermediate.key.pem 4096

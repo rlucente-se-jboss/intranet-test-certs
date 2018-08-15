@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 . $(dirname $0)/demo.conf
 
 # create directory structure
-rm -fr /root/ca /root/*.p12 /root/*.pem /root/.pki
-mkdir -p /root/ca
-cd /root/ca
+rm -fr $WORKDIR/ca $WORKDIR/*.p12 $WORKDIR/*.pem $WORKDIR/.pki
+mkdir -p $WORKDIR/ca
+cd $WORKDIR/ca
 mkdir certs crl newcerts private
 
 # create flat file database to track signed certs
@@ -14,7 +14,7 @@ touch index.txt
 echo 1000 > serial
 
 # create root CA configuration file
-cp /root/root-ca-openssl.conf /root/ca/openssl.conf
+envsubst '$WORKDIR' < $WORKDIR/root-ca-openssl.conf > $WORKDIR/ca/openssl.conf
 
 # create root key
 openssl genrsa -aes256 \
