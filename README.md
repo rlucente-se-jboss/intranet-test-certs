@@ -1,9 +1,14 @@
 # Generate Test Certificates
 The scripts follow these
 [instructions](https://jamielinux.com/docs/openssl-certificate-authority/index.html).
+The goal is to have a set of keys and certificates that match
+real-world scenarios vs the common practice of self-signed certificates.
 
-## Install RHEL 7.4 in FIPS mode
-When RHEL 7.4 first offers the installation menu, select the option
+This works on RHEL as well as Mac OSX. Simply run them from the
+directory where you cloned this repository.
+
+## Install RHEL in FIPS mode (RHEL Only)
+When RHEL first offers the installation menu, select the option
 "Install Red Hat Enterprise Linux 7.4" from the main menu, press
 TAB and then add `fips=1` to the vmlinuz line shown.  Make sure
 that there is sufficient entropy during installation by typing on
@@ -12,17 +17,17 @@ the vmlinuz line will configure the operating system to be in FIPS
 enforcing mode.
 
 ## Generate the certificates
-After installing RHEL 7.4, copy the contents of this directory to
-/root.  Edit the `demo.conf` script to use correct values for your
-IP address and RHSM credentials and pool id.  Finally, run the
-following commands as root:
+Clone this repository.  Edit the `demo.conf` script to use correct
+values for your IP address and, if using RHEL, RHSM credentials and
+pool id.
 
-    cd /root
-    ./01-subscribe.sh
+On RHEL only, run the following command and then wait for the system
+to reboot:
 
-After the system reboots, run the remaining commands:
+    sudo ./01-subscribe.sh
 
-    cd /root
+Generate the needed keys and certificates by running the commands:
+
     ./02-create-root-pair.sh
     ./03-create-intermediate-pair.sh
     ./04-create-server-pair.sh
@@ -32,14 +37,14 @@ After the system reboots, run the remaining commands:
 At the server, you'll need to import the following files into the
 appropriate keystore:
 
-* /root/server.p12 - the server's certificate and private key
-* /root/intermediate.cert.pem - the intermediate CA that signed the client and server certs
-* /root/ca.cert.pem - the trusted root CA
+* server.p12 - the server's certificate and private key
+* intermediate.cert.pem - the intermediate CA that signed the client and server certs
+* ca.cert.pem - the trusted root CA
     
 The client browser should import the following files:
 
-* /root/client.p12 - the client certificate and private key
-* /root/ca.cert.pem - the trusted root CA
+* client.p12 - the client certificate and private key
+* ca.cert.pem - the trusted root CA
 
 The default password can be overridden in `demo.conf`.
 
