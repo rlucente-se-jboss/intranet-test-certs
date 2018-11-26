@@ -60,7 +60,8 @@ openssl x509 -noout -text \
 openssl verify -CAfile certs/ca.cert.pem \
     intermediate/certs/intermediate.cert.pem
 
-# create the certificate chain file
+# the certificate chain file is the intermediate certificate
+# concatenated with the root CA
 cat intermediate/certs/intermediate.cert.pem \
     certs/ca.cert.pem > intermediate/certs/ca-chain.cert.pem
 chmod 444 intermediate/certs/ca-chain.cert.pem

@@ -38,13 +38,12 @@ At the server, you'll need to import the following files into the
 appropriate keystore:
 
 * server.p12 - the server's certificate and private key
-* intermediate.cert.pem - the intermediate CA that signed the client and server certs
-* ca.cert.pem - the trusted root CA
+* ca-chain.cert.pem - the intermediate CA (chained with the root CA) that signed the client and server certs
     
 The client browser should import the following files:
 
 * client.p12 - the client certificate and private key
-* ca.cert.pem - the trusted root CA
+* ca-chain.cert.pem - the intermediate CA (chained with the root CA) that signed the client and server certs
 
 The default password can be overridden in `demo.conf`.
 
