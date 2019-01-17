@@ -25,3 +25,6 @@ openssl pkcs12 -export \
 # make ca-chain cert available
 ln -s ca/intermediate/certs/ca-chain.cert.pem .
 
+# make client cert available
+ln -s ca/intermediate/certs/client.cert.pem .
+
