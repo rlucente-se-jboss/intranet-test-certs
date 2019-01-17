@@ -21,6 +21,7 @@ cat >> $WORKDIR/ca/intermediate/openssl.conf <<END1
 [server_alt_names]
 DNS.1 = *.$SERVER_DOMAIN
 DNS.2 = $SERVER_DOMAIN
+DNS.3 = localhost
 IP.1 = 127.0.0.1
 
 END1
