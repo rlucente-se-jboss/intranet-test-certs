@@ -22,6 +22,10 @@ openssl pkcs12 -export \
     -name client \
     -out client.p12
 
+# make root CA and intermediate CA available
+ln -s ca/certs/ca.cert.pem .
+ln -s ca/intermediate/certs/intermediate.cert.pem .
+
 # make ca-chain cert available
 ln -s ca/intermediate/certs/ca-chain.cert.pem .
 
