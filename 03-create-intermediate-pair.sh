@@ -72,3 +72,6 @@ openssl ca -config intermediate/openssl.conf \
     -passin "$OPENSSL_DEFAULT_PASSWORD" \
     -gencrl -out intermediate/crl/intermediate.crl.pem
 
+# verify the intermediate CA CRL
+openssl crl -in intermediate/crl/intermediate.crl.pem -noout -text
+
