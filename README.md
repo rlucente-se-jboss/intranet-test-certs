@@ -43,10 +43,16 @@ following files into a keystore:
 
 * server.p12 - the server's certificate and private key
 
-The truststore for the web server or application server will need to import:
+The truststore for the web server or application server will need
+to import:
 
 * ca.cert.pem - the root CA that signed the intermediate CA
 * intermediate.cert.pem - the intermediate CA that signed the PKCS12 certificates
+
+The web server or application server can optionally use the certificate
+revocation list for the intermediate CA:
+
+* intermediate.crl.pem
 
 The client browser should import the following files:
 
