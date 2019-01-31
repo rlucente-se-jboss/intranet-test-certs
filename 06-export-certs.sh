@@ -32,3 +32,5 @@ ln -s ca/intermediate/certs/ca-chain.cert.pem .
 # make client cert available
 ln -s ca/intermediate/certs/client.cert.pem .
 
+# make intermediate CA CRL available
+ln -s ca/intermediate/crl/intermediate.crl.pem .
