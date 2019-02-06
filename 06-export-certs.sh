@@ -2,6 +2,12 @@
 
 . $(dirname $0)/demo.conf
 
+echo
+echo "************************************************************************"
+echo "          Running: $0"
+echo "************************************************************************"
+echo
+
 # export server cert
 openssl pkcs12 -export \
     -passin "$OPENSSL_DEFAULT_PASSWORD" \
@@ -32,5 +38,18 @@ ln -s ca/intermediate/certs/ca-chain.cert.pem .
 # make client cert available
 ln -s ca/intermediate/certs/client.cert.pem .
 
-# make intermediate CA CRL available
-ln -s ca/intermediate/crl/intermediate.crl.pem .
+# make CRL available in DER format
+ln -s ca/intermediate/crl/intermediate-ca.crl .
+
+echo Verify the server and client certificates against the CA cert chain and CRL
+echo
+cat ca-chain.cert.pem ca/intermediate/crl/crl.pem > crl_chain.pem
+openssl verify -crl_check -CAfile crl_chain.pem ca/intermediate/certs/$SERVER_FQDN.cert.pem
+openssl verify -crl_check -CAfile crl_chain.pem ca/intermediate/certs/client.cert.pem
+echo
+
+echo "The generated certificates include a CRL Distribution Point.  You"
+echo "can make this available (assuming you have python3 installed) using:"
+echo
+echo "    sudo python3 -m http.server 80"
+echo

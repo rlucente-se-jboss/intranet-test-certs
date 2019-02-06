@@ -2,6 +2,12 @@
 
 . $(dirname $0)/demo.conf
 
+echo
+echo "************************************************************************"
+echo "          Running: $0"
+echo "************************************************************************"
+echo
+
 # create the intermediate pair
 
 # prepare the directory
@@ -16,7 +22,7 @@ echo 1000 > serial
 echo 1000 > $WORKDIR/ca/intermediate/crlnumber
 
 # create intermediate CA configuration file
-envsubst '$WORKDIR' < $WORKDIR/intermediate-ca-openssl.conf > $WORKDIR/ca/intermediate/openssl.conf
+envsubst '$WORKDIR$SERVER_DOMAIN' < $WORKDIR/intermediate-ca-openssl.conf > $WORKDIR/ca/intermediate/openssl.conf
 cat >> $WORKDIR/ca/intermediate/openssl.conf <<END1
 [server_alt_names]
 DNS.1 = *.$SERVER_DOMAIN
@@ -67,11 +73,14 @@ cat intermediate/certs/intermediate.cert.pem \
     certs/ca.cert.pem > intermediate/certs/ca-chain.cert.pem
 chmod 444 intermediate/certs/ca-chain.cert.pem
 
-# create the empty intermediate CA CRL
+# create the empty CRL
 openssl ca -config intermediate/openssl.conf \
     -passin "$OPENSSL_DEFAULT_PASSWORD" \
-    -gencrl -out intermediate/crl/intermediate.crl.pem
+    -gencrl -out intermediate/crl/crl.pem
+
+openssl crl -inform PEM -in intermediate/crl/crl.pem \
+    -outform DER -out intermediate/crl/intermediate-ca.crl
 
 # verify the intermediate CA CRL
-openssl crl -in intermediate/crl/intermediate.crl.pem -noout -text
+openssl crl -in intermediate/crl/crl.pem -noout -text
 

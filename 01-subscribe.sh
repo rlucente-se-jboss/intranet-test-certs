@@ -6,6 +6,12 @@
 
 . $(dirname $0)/demo.conf
 
+echo
+echo "************************************************************************"
+echo "          Running: $0"
+echo "************************************************************************"
+echo
+
 # set hostname
 hostnamectl set-hostname $SERVER_FQDN.
 

@@ -50,9 +50,9 @@ to import:
 * intermediate.cert.pem - the intermediate CA that signed the PKCS12 certificates
 
 The web server or application server can optionally use the certificate
-revocation list for the intermediate CA:
+revocation list (using DER encoding):
 
-* intermediate.crl.pem
+* intermediate-ca.crl
 
 The client browser should import the following files:
 

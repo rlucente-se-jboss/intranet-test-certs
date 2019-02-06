@@ -2,8 +2,14 @@
 
 . $(dirname $0)/demo.conf
 
+echo
+echo "************************************************************************"
+echo "          Running: $0"
+echo "************************************************************************"
+echo
+
 # create directory structure
-rm -fr $WORKDIR/ca $WORKDIR/*.p12 $WORKDIR/*.pem $WORKDIR/.pki
+rm -fr $WORKDIR/ca $WORKDIR/*.p12 $WORKDIR/*.pem $WORKDIR/.pki $WORKDIR/*.crl
 mkdir -p $WORKDIR/ca
 cd $WORKDIR/ca
 mkdir certs crl newcerts private
@@ -14,7 +20,7 @@ touch index.txt
 echo 1000 > serial
 
 # create root CA configuration file
-envsubst '$WORKDIR' < $WORKDIR/root-ca-openssl.conf > $WORKDIR/ca/openssl.conf
+envsubst '$WORKDIR$SERVER_DOMAIN' < $WORKDIR/root-ca-openssl.conf > $WORKDIR/ca/openssl.conf
 
 # create root key
 openssl genrsa -aes256 \
