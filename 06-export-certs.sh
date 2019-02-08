@@ -32,9 +32,6 @@ openssl pkcs12 -export \
 ln -s ca/certs/ca.cert.pem .
 ln -s ca/intermediate/certs/intermediate.cert.pem .
 
-# make ca-chain cert available
-ln -s ca/intermediate/certs/ca-chain.cert.pem .
-
 # make client cert available
 ln -s ca/intermediate/certs/client.cert.pem .
 
@@ -43,7 +40,7 @@ ln -s ca/intermediate/crl/intermediate-ca.crl .
 
 echo Verify the server and client certificates against the CA cert chain and CRL
 echo
-cat ca-chain.cert.pem ca/intermediate/crl/crl.pem > crl_chain.pem
+cat ca/intermediate/certs/ca-chain.cert.pem ca/intermediate/crl/crl.pem > crl_chain.pem
 openssl verify -crl_check -CAfile crl_chain.pem ca/intermediate/certs/$SERVER_FQDN.cert.pem
 openssl verify -crl_check -CAfile crl_chain.pem ca/intermediate/certs/client.cert.pem
 echo
