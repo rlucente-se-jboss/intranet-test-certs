@@ -38,6 +38,10 @@ the commands:
 All generated certificate files and private key entries will be in
 the directory where this command was run.
 
+You can optionally revoke the client certificate via a CRL using:
+
+    ./07-revoke-client.sh
+
 Your web server or application server will need to import the
 following files into a keystore:
 
