@@ -19,13 +19,27 @@ hostnamectl set-hostname $SERVER_FQDN.
 subscription-manager register --username $RHSM_USERNAME --password $RHSM_PASSWD
 subscription-manager attach --pool=$RHSM_POOL_ID
 subscription-manager repos --disable='*'
-subscription-manager repos --enable=rhel-7-server-rpms
+
+if [[ -n "$(grep 'release 7' /etc/redhat-release)" ]]
+then
+    subscription-manager repos --enable=rhel-7-server-rpms
+elif [[ -n "$(grep 'release 8' /etc/redhat-release)" ]]
+then
+    subscription-manager repos \
+        --enable=rhel-8-for-x86_64-baseos-rpms \
+        --enable=rhel-8-for-x86_64-appstream-rpms
+else
+    echo "*** UNKNOWN OPERATING SYSTEM ***"
+    exit 1
+fi
 
 # apply all updates
 yum -y update
-yum -y install nss-tools
-yum -y clean all
 
-# reboot
+# install needed tools
+yum -y install nss-tools openssl
+
+# clean up and reboot
+yum -y clean all
 systemctl reboot
 
