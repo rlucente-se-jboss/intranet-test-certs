@@ -22,8 +22,8 @@ values for your IP address and, if using RHEL, RHSM credentials and
 pool id.
 
 On RHEL only, if you need to subscribe to repositories to install
-needed packages nss-tools, please run the following command and
-then wait for the system to reboot:
+the nss-tools package, please run the following command and then
+wait for the system to reboot:
 
     sudo ./01-subscribe.sh
 
