@@ -9,7 +9,7 @@ echo "************************************************************************"
 echo
 
 # export server cert
-openssl pkcs12 -export \
+${OPENSSL} pkcs12 -export \
     -passin "$OPENSSL_DEFAULT_PASSWORD" \
     -passout "$OPENSSL_DEFAULT_PASSWORD" \
     -in ca/intermediate/certs/$SERVER_FQDN.cert.pem \
@@ -19,7 +19,7 @@ openssl pkcs12 -export \
     -out server.p12
 
 # export client cert
-openssl pkcs12 -export \
+${OPENSSL} pkcs12 -export \
     -passin "$OPENSSL_DEFAULT_PASSWORD" \
     -passout "$OPENSSL_DEFAULT_PASSWORD" \
     -in ca/intermediate/certs/client.cert.pem \
@@ -41,8 +41,8 @@ ln -s ca/intermediate/crl/intermediate-ca.crl .
 echo Verify the server and client certificates against the CA cert chain and CRL
 echo
 cat ca/intermediate/certs/ca-chain.cert.pem ca/intermediate/crl/crl.pem > crl_chain.pem
-openssl verify -crl_check -CAfile crl_chain.pem ca/intermediate/certs/$SERVER_FQDN.cert.pem
-openssl verify -crl_check -CAfile crl_chain.pem ca/intermediate/certs/client.cert.pem
+${OPENSSL} verify -crl_check -CAfile crl_chain.pem ca/intermediate/certs/$SERVER_FQDN.cert.pem
+${OPENSSL} verify -crl_check -CAfile crl_chain.pem ca/intermediate/certs/client.cert.pem
 echo
 
 echo "The generated certificates include a CRL Distribution Point.  You"

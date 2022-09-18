@@ -41,19 +41,19 @@ sed -i.bak "s/CLIENT_SAN_HERE/otherName:msUPN;UTF8:$CLIENT_UPN/g" \
 
 # create the intermediate key
 cd $WORKDIR/ca
-openssl genrsa -aes256 \
+${OPENSSL} genrsa -aes256 \
    -passout "$OPENSSL_DEFAULT_PASSWORD" \
    -out intermediate/private/intermediate.key.pem 4096
 chmod 400 intermediate/private/intermediate.key.pem
 
 # create the intermediate certificate
-openssl req -config intermediate/openssl.conf -new -sha256 \
+${OPENSSL} req -config intermediate/openssl.conf -new -sha256 \
     -passin "$OPENSSL_DEFAULT_PASSWORD" \
     -key intermediate/private/intermediate.key.pem \
     -out intermediate/csr/intermediate.csr.pem \
-    -subj "/C=US/ST=NC/L=Raleigh/O=Red Hat/OU=Public Sector/CN=Red Hat Intermediate CA Test"
+    -subj "$SUBJECT_BASE/CN=Red Hat Intermediate CA Test"
 
-openssl ca -config openssl.conf -extensions v3_intermediate_ca \
+${OPENSSL} ca -config openssl.conf -extensions v3_intermediate_ca \
     -batch -passin "$OPENSSL_DEFAULT_PASSWORD" \
     -days 3650 -notext -md sha256 \
     -in intermediate/csr/intermediate.csr.pem \
@@ -62,9 +62,9 @@ openssl ca -config openssl.conf -extensions v3_intermediate_ca \
 chmod 444 intermediate/certs/intermediate.cert.pem
 
 # verify the intermediate certificate
-openssl x509 -noout -text \
+${OPENSSL} x509 -noout -text \
     -in intermediate/certs/intermediate.cert.pem
-openssl verify -CAfile certs/ca.cert.pem \
+${OPENSSL} verify -CAfile certs/ca.cert.pem \
     intermediate/certs/intermediate.cert.pem
 
 # the certificate chain file is the intermediate certificate
@@ -74,13 +74,13 @@ cat intermediate/certs/intermediate.cert.pem \
 chmod 444 intermediate/certs/ca-chain.cert.pem
 
 # create the empty CRL
-openssl ca -config intermediate/openssl.conf \
+${OPENSSL} ca -config intermediate/openssl.conf \
     -passin "$OPENSSL_DEFAULT_PASSWORD" \
     -gencrl -out intermediate/crl/crl.pem
 
-openssl crl -inform PEM -in intermediate/crl/crl.pem \
+${OPENSSL} crl -inform PEM -in intermediate/crl/crl.pem \
     -outform DER -out intermediate/crl/intermediate-ca.crl
 
 # verify the intermediate CA CRL
-openssl crl -in intermediate/crl/crl.pem -noout -text
+${OPENSSL} crl -in intermediate/crl/crl.pem -noout -text
 
