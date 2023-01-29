@@ -51,7 +51,7 @@ ${OPENSSL} req -config intermediate/openssl.conf -new -sha256 \
     -passin "$OPENSSL_DEFAULT_PASSWORD" \
     -key intermediate/private/intermediate.key.pem \
     -out intermediate/csr/intermediate.csr.pem \
-    -subj "$SUBJECT_BASE/CN=Red Hat Intermediate CA Test"
+    -subj "$SUBJECT_INTERMEDIATE_CA"
 
 ${OPENSSL} ca -config openssl.conf -extensions v3_intermediate_ca \
     -batch -passin "$OPENSSL_DEFAULT_PASSWORD" \

@@ -34,7 +34,7 @@ ${OPENSSL} req -config openssl.conf \
     -key private/ca.key.pem \
     -new -x509 -days 7300 -sha256 -extensions v3_ca \
     -out certs/ca.cert.pem \
-    -subj "/C=US/ST=NC/L=Raleigh/O=Red Hat/OU=Public Sector/CN=Red Hat Root CA Test"
+    -subj "$SUBJECT_ROOT_CA"
 
 chmod 444 certs/ca.cert.pem
 
