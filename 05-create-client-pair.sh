@@ -8,6 +8,13 @@ echo "          Running: $0"
 echo "************************************************************************"
 echo
 
+#
+# adjust user principal name within subject alternative name
+# msUPN = 1.3.6.1.4.1.311.20.2.3
+#
+sed -i.bak "s/\(otherName:msUPN;UTF8:\)..*/\1$CLIENT_UPN/g' \
+    $WORKDIR/ca/intermediate/openssl.conf
+
 # create the private key
 
 cd $WORKDIR/ca
@@ -22,7 +29,7 @@ ${OPENSSL} req -config intermediate/openssl.conf -new -sha256 \
     -passin "$OPENSSL_DEFAULT_PASSWORD" \
     -key intermediate/private/client.key.pem \
     -out intermediate/csr/client.csr.pem \
-    -subj "$SUBJECT_BASE/CN=$CLIENT_USERNAME"
+    -subj "$SUBJECT_CLIENT"
 
 # sign the cert with the intermediate ca
 
