@@ -12,7 +12,7 @@ echo
 # adjust user principal name within subject alternative name
 # msUPN = 1.3.6.1.4.1.311.20.2.3
 #
-sed -i.bak "s/\(otherName:msUPN;UTF8:\)..*/\1$CLIENT_UPN/g' \
+sed -i.bak "s/\(otherName:msUPN;UTF8:\)..*/\1$CLIENT_UPN/g" \
     $WORKDIR/ca/intermediate/openssl.conf
 
 # create the private key
