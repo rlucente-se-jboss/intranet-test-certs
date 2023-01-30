@@ -23,12 +23,14 @@ echo 1000 > $WORKDIR/ca/intermediate/crlnumber
 
 # create intermediate CA configuration file
 envsubst '$WORKDIR$SERVER_DOMAIN' < $WORKDIR/intermediate-ca-openssl.conf > $WORKDIR/ca/intermediate/openssl.conf
+
+# set a default set of server names for a server certificate
 cat >> $WORKDIR/ca/intermediate/openssl.conf <<END1
 [server_alt_names]
-DNS.1 = *.$SERVER_DOMAIN
-DNS.2 = $SERVER_DOMAIN
-DNS.3 = localhost
-IP.1 = 127.0.0.1
+DNS.1 = $SERVER_FQDN
+# DNS.2 = *.$SERVER_DOMAIN
+# DNS.3 = localhost
+# IP.1 = 127.0.0.1
 
 END1
 

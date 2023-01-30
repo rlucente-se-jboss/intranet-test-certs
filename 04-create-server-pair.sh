@@ -8,6 +8,10 @@ echo "          Running: $0"
 echo "************************************************************************"
 echo
 
+# adjust the server alternative names
+
+sed -i.bak "s/^\(DNS.1 = \)..*/\1$SERVER_FQDN/g" $WORKDIR/ca/intermediate/openssl.conf
+
 # create the private key
 
 cd $WORKDIR/ca
@@ -22,7 +26,7 @@ ${OPENSSL} req -config intermediate/openssl.conf -new -sha256 \
     -passin "$OPENSSL_DEFAULT_PASSWORD" \
     -key intermediate/private/$SERVER_FQDN.key.pem \
     -out intermediate/csr/$SERVER_FQDN.csr.pem \
-    -subj "/C=US/ST=NC/L=Raleigh/O=Red Hat/OU=Public Sector/CN=*.$SERVER_DOMAIN"
+    -subj "$SUBJECT_SERVER"
 
 # sign the cert with the intermediate ca
 
