@@ -11,12 +11,6 @@ echo
 [[ $EUID -ne 0 ]] && exit_on_error "Must run as root"
 
 ##
-## Set hostname
-##
-
-hostnamectl set-hostname $SERVER_FQDN.
-
-##
 ## Register the system
 ##
 
