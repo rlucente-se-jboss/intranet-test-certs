@@ -38,7 +38,7 @@ dnf -y update
 ## Install needed tools
 ##
 
-dnf -y install nss-tools openssl
+dnf -y install nss-tools openssl tpm2-tools
 
 ##
 ## Clean up
