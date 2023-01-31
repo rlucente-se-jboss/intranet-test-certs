@@ -3,3 +3,4 @@
 *.crl
 ca
 *.bak
+.DS_Store
